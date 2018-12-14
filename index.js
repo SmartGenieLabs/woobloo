@@ -14,9 +14,10 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 
-app.post("/", Controller.getInfo);
+app.post("/", Controller.getResponse);
+app.post("/add", Controller.saveResponse);
 
-
-app.listen((process.env.PORT || 8000), () => {
-    console.log("Server is up and running...");
+var port = process.env.PORT || 8000
+app.listen((port), () => {
+    console.log("Server is up and running on port: ", port);
 });
