@@ -37,20 +37,44 @@ Controller.getResponse = (req, res) => {
             else{
                 res.json(data.response);
             }
-        })
+        });
     }
     if(req.body.result.metadata.intentName == "Driver"){
-        return res.json("Your request for driver is accepted, we will call you shortly.");
-    }
+        Response.findOne({service:req.body.result.metadata.intentName},(err, data) => {
+            if(err){
+                res.json("Oh oo, Something went wrong");
+            }
+            else{
+                res.json(data.response);
+            }
+        });    }
     if(req.body.result.metadata.intentName == "Flight"){
-        return res.json("Hola, your flight tickets has been booked.");
-    }
+        Response.findOne({service:req.body.result.metadata.intentName},(err, data) => {
+            if(err){
+                res.json("Oh oo, Something went wrong");
+            }
+            else{
+                res.json(data.response);
+            }
+        });    }
     if(req.body.result.metadata.intentName == "Food"){
-        return res.json("Food category");
-    }
+        Response.findOne({service:req.body.result.metadata.intentName},(err, data) => {
+            if(err){
+                res.json("Oh oo, Something went wrong");
+            }
+            else{
+                res.json(data.response);
+            }
+        });    }
     if(req.body.result.metadata.intentName == "Handyman"){
-        return res.json("Handyman category");
-    }
+        Response.findOne({service:req.body.result.metadata.intentName},(err, data) => {
+            if(err){
+                res.json("Oh oo, Something went wrong");
+            }
+            else{
+                res.json(data.response);
+            }
+        });    }
 }
 
 Controller.saveResponse = (req, res) => {
