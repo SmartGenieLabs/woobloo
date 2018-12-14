@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const http = require('http');
 const API_KEY = require('./apiKey');
 const app = express();
+const mongoose = require('mongoose');
 const Controller = require('./Controller');
 
 mongoose.connect("mongodb://woobloo:woobloo1@ds121652.mlab.com:21652/woobloo");

@@ -44,3 +44,5 @@ Controller.getInfo = (req, res) => {
         return res.json("Handyman category");
     }
 }
+
+module.exports = Controller;
