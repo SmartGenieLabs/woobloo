@@ -2,7 +2,7 @@ const Controller = {};
 const Response = require('./models/responseSchema');
 
 Controller.getResponse = (req, res) => {
-    if(req.body.result.metadata.intentName == "Movie"){
+    if(req.body.result.metadata.intentName == "movie-intent"){
         const movieToSearch = req.body.result && req.body.result.parameters && req.body.result.parameters.movie ? req.body.result.parameters.movie : 'The Godfather';
     const reqUrl = encodeURI(`http://www.omdbapi.com/?t=${movieToSearch}&apikey=${API_KEY}`);
     http.get(reqUrl, (responseFromAPI) => {
