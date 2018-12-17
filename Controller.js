@@ -39,7 +39,7 @@ Controller.getResponse = (req, res) => {
             }
         });
     }
-    if(req.body.result.intent.displayName == "Driver"){
+    if(req.body.queryResult.intent.displayName == "Driver"){
         Response.findOne({service:req.body.queryResult.intent.displayName},(err, data) => {
             if(err){
                 res.json("Oh oo, Something went wrong");
@@ -48,7 +48,7 @@ Controller.getResponse = (req, res) => {
                 res.json(data.response);
             }
         });    }
-    if(req.body.result.intent.displayName == "Flight"){
+    if(req.body.queryResult.intent.displayName == "Flight"){
         Response.findOne({service:req.body.queryResult.intent.displayName},(err, data) => {
             if(err){
                 res.json("Oh oo, Something went wrong");
@@ -57,7 +57,7 @@ Controller.getResponse = (req, res) => {
                 res.json(data.response);
             }
         });    }
-    if(req.body.result.intent.displayName == "Food"){
+    if(req.body.queryResult.intent.displayName == "Food"){
         Response.findOne({service:req.body.queryResult.intent.displayName},(err, data) => {
             if(err){
                 res.json("Oh oo, Something went wrong");
