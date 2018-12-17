@@ -34,47 +34,47 @@ Controller.response = (req, res) => {
     if(req.body.result.metadata.intentName == "Cab"){
         Response.findOne({service:req.body.result.metadata.intentName},(err, data) => {
             if(err){
-                res.json("Oh oo, Something went wrong");
+                return res.json("Oh oo, Something went wrong");
             }
             else{
-                res.json(data.response);
+                return res.json(data.response);
             }
         });
     }
     if(req.body.result.metadata.intentName == "Driver"){
         Response.findOne({service:req.body.result.metadata.intentName},(err, data) => {
             if(err){
-                res.json("Oh oo, Something went wrong");
+                return res.json("Oh oo, Something went wrong");
             }
             else{
-                res.json(data.response);
+                return res.json(data.response);
             }
         });    }
     if(req.body.result.metadata.intentName == "Flight"){
         Response.findOne({service:req.body.result.metadata.intentName},(err, data) => {
             if(err){
-                res.json("Oh oo, Something went wrong");
+                return res.json("Oh oo, Something went wrong");
             }
             else{
-                res.json(data.response);
+                return res.json(data.response);
             }
         });    }
     if(req.body.result.metadata.intentName == "Food"){
         Response.findOne({service:req.body.result.metadata.intentName},(err, data) => {
             if(err){
-                res.json("Oh oo, Something went wrong");
+                return res.json("Oh oo, Something went wrong");
             }
             else{
-                res.json(data.response);
+                return res.json(data.response);
             }
         });    }
     if(req.body.result.metadata.intentName == "Handyman"){
         Response.findOne({service:req.body.result.metadata.intentName},(err, data) => {
             if(err){
-                res.json("Oh oo, Something went wrong");
+                return res.json("Oh oo, Something went wrong");
             }
             else{
-                res.json(data.response);
+                return res.json(data.response);
             }
         });    }
 }
