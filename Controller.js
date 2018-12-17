@@ -3,7 +3,7 @@ const Response = require('./models/responseSchema');
 const API_KEY = require('./apiKey');
 const http = require('http');
 
-Controller.getResponse = (req, res) => {
+Controller.response = (req, res) => {
     if(req.body.result.metadata.intentName == "movie-intent"){
         const movieToSearch = req.body.result && req.body.result.parameters && req.body.result.parameters.movie ? req.body.result.parameters.movie : 'The Godfather';
     const reqUrl = encodeURI(`http://www.omdbapi.com/?t=${movieToSearch}&apikey=${API_KEY}`);
@@ -101,6 +101,65 @@ Controller.saveResponse = (req, res) => {
                 res.status(200).json(data);
             }
         })
+}
+
+Controller.getResponse = (req, res) => {
+    if(req.body.queryResult.intent.displayName == "Movie"){
+        Response.findOne({service:req.body.queryResult.intent.displayName},(err, data) => {
+            if(err){
+                res.json("Oh oo, Something went wrong");
+            }
+            else{
+                res.json("data.response");
+            }
+        });
+    }
+    if(req.body.queryResult.intent.displayName == "Cab"){
+        Response.findOne({service:req.body.queryResult.intent.displayName},(err, data) => {
+            if(err){
+                res.json("Oh oo, Something went wrong");
+            }
+            else{
+                res.json(data.response);
+            }
+        });
+    }
+    if(req.body.queryResult.intent.displayName == "Driver"){
+        Response.findOne({service:req.body.queryResult.intent.displayName},(err, data) => {
+            if(err){
+                res.json("Oh oo, Something went wrong");
+            }
+            else{
+                res.json(data.response);
+            }
+        });    }
+    if(req.body.queryResult.intent.displayName == "Flight"){
+        Response.findOne({service:req.body.queryResult.intent.displayName},(err, data) => {
+            if(err){
+                res.json("Oh oo, Something went wrong");
+            }
+            else{
+                res.json(data.response);
+            }
+        });    }
+    if(req.body.queryResult.intent.displayName == "Food"){
+        Response.findOne({service:req.body.queryResult.intent.displayName},(err, data) => {
+            if(err){
+                res.json("Oh oo, Something went wrong");
+            }
+            else{
+                res.json(data.response);
+            }
+        });    }
+    if(req.body.queryResult.intent.displayName == "Handyman"){
+        Response.findOne({service:req.body.queryResult.intent.displayName},(err, data) => {
+            if(err){
+                res.json("Oh oo, Something went wrong");
+            }
+            else{
+                res.json(data.response);
+            }
+        });    }
 }
 
 module.exports = Controller;

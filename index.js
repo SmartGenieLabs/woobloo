@@ -14,7 +14,8 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 
-app.post("/api", Controller.getResponse);
+app.post("/api", Controller.response);
+app.post("/assistant", Controller.getResponse);
 app.post("/add", Controller.saveResponse);
 
 var port = process.env.PORT || 8000
@@ -22,61 +23,3 @@ app.listen((port), () => {
     console.log("Server is up and running on port: ", port);
 });
 
-Controller.getResponse = (req, res) => {
-    if(req.body.queryResult.intent.displayName == "Movie"){
-        Response.findOne({service:req.body.queryResult.intent.displayName},(err, data) => {
-            if(err){
-                res.json("Oh oo, Something went wrong");
-            }
-            else{
-                res.json("data.response");
-            }
-        });
-    }
-    if(req.body.queryResult.intent.displayName == "Cab"){
-        Response.findOne({service:req.body.queryResult.intent.displayName},(err, data) => {
-            if(err){
-                res.json("Oh oo, Something went wrong");
-            }
-            else{
-                res.json(data.response);
-            }
-        });
-    }
-    if(req.body.queryResult.intent.displayName == "Driver"){
-        Response.findOne({service:req.body.queryResult.intent.displayName},(err, data) => {
-            if(err){
-                res.json("Oh oo, Something went wrong");
-            }
-            else{
-                res.json(data.response);
-            }
-        });    }
-    if(req.body.queryResult.intent.displayName == "Flight"){
-        Response.findOne({service:req.body.queryResult.intent.displayName},(err, data) => {
-            if(err){
-                res.json("Oh oo, Something went wrong");
-            }
-            else{
-                res.json(data.response);
-            }
-        });    }
-    if(req.body.queryResult.intent.displayName == "Food"){
-        Response.findOne({service:req.body.queryResult.intent.displayName},(err, data) => {
-            if(err){
-                res.json("Oh oo, Something went wrong");
-            }
-            else{
-                res.json(data.response);
-            }
-        });    }
-    if(req.body.queryResult.intent.displayName == "Handyman"){
-        Response.findOne({service:req.body.queryResult.intent.displayName},(err, data) => {
-            if(err){
-                res.json("Oh oo, Something went wrong");
-            }
-            else{
-                res.json(data.response);
-            }
-        });    }
-}
