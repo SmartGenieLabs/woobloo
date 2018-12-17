@@ -4,7 +4,7 @@ const API_KEY = require('./apiKey');
 const http = require('http');
 
 Controller.getResponse = (req, res) => {
-    if(req.body.result.metadata.intentName == "movie-intent"){
+    if(req.body.result.metadata.intentName == "Movie"){
         Response.findOne({service:req.body.result.metadata.intentName},(err, data) => {
             if(err){
                 return res.json({
