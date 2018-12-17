@@ -14,8 +14,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 
-app.post("/api", Controller.response);
-app.post("/assistant", Controller.getResponse);
+app.post("/api", Controller.getResponse);
 app.post("/add", Controller.saveResponse);
 
 var port = process.env.PORT || 8000
