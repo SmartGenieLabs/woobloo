@@ -1,5 +1,6 @@
 const Controller = {};
 const Response = require('./models/responseSchema');
+const API_KEY = require('./apiKey');
 
 Controller.getResponse = (req, res) => {
     if(req.body.result.metadata.intentName == "movie-intent"){
