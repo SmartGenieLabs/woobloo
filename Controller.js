@@ -30,7 +30,7 @@ Controller.getResponse = (req, res) => {
     });
     }
     if(req.body.result.intent.displayName == "Cab"){
-        Response.findOne({service:req.body.result.metadata.intentName},(err, data) => {
+        Response.findOne({service:req.body.result.intent.displayName},(err, data) => {
             if(err){
                 res.json("Oh oo, Something went wrong");
             }
