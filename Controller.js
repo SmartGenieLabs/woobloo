@@ -29,8 +29,8 @@ Controller.getResponse = (req, res) => {
         });
     });
     }
-    if(req.body.result.intent.displayName == "Cab"){
-        Response.findOne({service:req.body.result.intent.displayName},(err, data) => {
+    if(req.body.queryResult.intent.displayName == "Cab"){
+        Response.findOne({service:req.body.queryResult.intent.displayName},(err, data) => {
             if(err){
                 res.json("Oh oo, Something went wrong");
             }
