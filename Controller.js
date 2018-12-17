@@ -2,7 +2,7 @@ const Controller = {};
 const Response = require('./models/responseSchema');
 
 Controller.getResponse = (req, res) => {
-    if(req.body.result.metadata.intentName == "Movie"){
+    if(req.body.queryResult.intent.displayName == "Movie"){
         const movieToSearch = req.body.result && req.body.result.parameters && req.body.result.parameters.movie ? req.body.result.parameters.movie : 'The Godfather';
     const reqUrl = encodeURI(`http://www.omdbapi.com/?t=${movieToSearch}&apikey=${API_KEY}`);
     http.get(reqUrl, (responseFromAPI) => {
@@ -40,7 +40,7 @@ Controller.getResponse = (req, res) => {
         });
     }
     if(req.body.result.intent.displayName == "Driver"){
-        Response.findOne({service:req.body.result.metadata.intentName},(err, data) => {
+        Response.findOne({service:req.body.queryResult.intent.displayName},(err, data) => {
             if(err){
                 res.json("Oh oo, Something went wrong");
             }
@@ -49,7 +49,7 @@ Controller.getResponse = (req, res) => {
             }
         });    }
     if(req.body.result.intent.displayName == "Flight"){
-        Response.findOne({service:req.body.result.metadata.intentName},(err, data) => {
+        Response.findOne({service:req.body.queryResult.intent.displayName},(err, data) => {
             if(err){
                 res.json("Oh oo, Something went wrong");
             }
@@ -58,7 +58,7 @@ Controller.getResponse = (req, res) => {
             }
         });    }
     if(req.body.result.intent.displayName == "Food"){
-        Response.findOne({service:req.body.result.metadata.intentName},(err, data) => {
+        Response.findOne({service:req.body.queryResult.intent.displayName},(err, data) => {
             if(err){
                 res.json("Oh oo, Something went wrong");
             }
@@ -66,8 +66,8 @@ Controller.getResponse = (req, res) => {
                 res.json(data.response);
             }
         });    }
-    if(req.body.result.metadata.intentName == "Handyman"){
-        Response.findOne({service:req.body.result.metadata.intentName},(err, data) => {
+    if(req.body.queryResult.intent.displayName == "Handyman"){
+        Response.findOne({service:req.body.queryResult.intent.displayName},(err, data) => {
             if(err){
                 res.json("Oh oo, Something went wrong");
             }
