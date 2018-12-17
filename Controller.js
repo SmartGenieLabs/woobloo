@@ -56,7 +56,10 @@ Controller.response = (req, res) => {
                 return res.json("Oh oo, Something went wrong");
             }
             else{
-                return res.json(data.response);
+                return res.json({
+                    speech: data.response,
+                displayText: data.response,
+                source: 'get-movie-details'});
             }
         });    }
     if(req.body.result.metadata.intentName == "Food"){
