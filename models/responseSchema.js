@@ -5,7 +5,6 @@ const { Schema } = require('mongoose');
 const responseSchema = new Schema({
         service: {
             type: String, 
-            ref:"Customer",
             required: true
         },
         response:{

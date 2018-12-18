@@ -1,22 +1,41 @@
 const Controller = {};
 const Response = require('./models/responseSchema');
+const Movie = require('./models/movieSchema');
 
+
+//Edit View Update response
 Controller.getResponse = (req, res) => {
     if(req.body.result.metadata.intentName == "Movie"){
-        Response.findOne({service:req.body.result.metadata.intentName},(err, data) => {
+        console.log(req.body.result.parameters);
+        myData = new Movie({
+            movieName: req.body.result.parameters.movie_Name,
+            noOfTickets: req.body.result.parameters.movie_noOfTickets,
+            time: req.body.result.parameters.movie_Time,
+            location: req.body.result.parameters.movie_Location["street-address"]
+        });
+        console.log(myData);
+        myData.save((err, data) => {
             if(err){
-                return res.json({
-                    speech: "Oh oo, Something went wrong",
-                    displayText: "Oh oo, Something went wrong",
-                    source: 'api'});
+                res.send(err);
             }
             else{
-                return res.json({
-                    speech: data.response,
-                    displayText: data.response,
-                    source: 'api'});
+                Response.findOne({service:req.body.result.metadata.intentName},(err, data) => {
+                    if(err){
+                        return res.json({
+                            speech: "Oh oo, Something went wrong",
+                            displayText: "Oh oo, Something went wrong",
+                            source: 'api'});
+                    }
+                    else{
+                        return res.json({
+                            speech: data.response,
+                            displayText: data.response,
+                            source: 'api'});
+                    }
+                });
             }
-        });
+            
+        })
     }
     if(req.body.result.metadata.intentName == "Cab"){
         Response.findOne({service:req.body.result.metadata.intentName},(err, data) => {
@@ -95,7 +114,6 @@ Controller.getResponse = (req, res) => {
             }
         });    }
 }
-
 Controller.saveCabsResponse = (req, res) => {
     console.log(req.body);
     Response.findOneAndUpdate({ service: "Cab"}, 
@@ -120,7 +138,6 @@ Controller.saveCabsResponse = (req, res) => {
             }
         })
 }
-
 Controller.saveDriversResponse = (req, res) => {
     console.log(req.body);
     Response.findOneAndUpdate({ service: "Driver"}, 
@@ -242,7 +259,7 @@ Controller.saveMoviesResponse = (req, res) => {
         })
 }
 
-//Edit View
+//Edit View Get response
 Controller.getCabsResponse = (req, res) => {
     Response.findOne({service:"Cab"},(err, data) => {
         if(err){
@@ -307,6 +324,18 @@ Controller.getMoviesResponse = (req, res) => {
             return res.render("pages/movies_edit", {result: data});
         }
     });
+}
+
+Controller.viewMovies = (req, res) => {
+    Movie.find({}, (err, data) => {
+        if(err){
+            res.status(400).json(err);
+        }
+        else {
+            console.log(data);
+            res.render("pages/movies_view", {result:data});
+        }
+    })
 }
 
 

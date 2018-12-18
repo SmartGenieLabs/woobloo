@@ -39,9 +39,7 @@ app.get("/food_delivery_view", (req, res) => {
 app.get("/handyman_view", (req, res) => {
     res.render("pages/handyman_view");
 });
-app.get("/movies_view", (req, res) => {
-    res.render("pages/movies_view");
-});
+app.get("/movies_view", Controller.viewMovies);
 
 
 app.get("/cabs_edit", Controller.getCabsResponse);
