@@ -265,12 +265,12 @@
                   <h3 class="mb-0"><i class="ni ni-ruler-pencil text-red"></i>&nbsp Edit Response</h3>
                 </div>
                 <div class="col-4 text-right">
-                  <a href="#!" class="btn btn-lg btn-primary">Update</a>
-                </div>
+                    <form method="POST" action="/food_delivery_edit">
+                <button type="submit" class="btn btn-lg btn-primary">Update</a>
+                    </div>
               </div>
             </div>
             <div class="card-body">
-              <form>
                
                 <h4 class="mb-4"><i class="ni ni-chat-round text-green"></i>&nbsp&nbspExisting Response :</h4>
 				
@@ -280,7 +280,7 @@
 						  <div class="card card-stats mb-4 mb-xl-0">
 						   <div class="card-body">
 								<div class="col">
-								  <h4 class="card-title text-muted mb-0">You have ordered "3" "burger" to Embassy Tech Village at 11:45 PM. Thank you for ordering with Woobloo. Woobloo wish you Merry Christmas!</h4>
+								  <h4 class="card-title text-muted mb-0"><%= result.response %></h4>
 								</div>     
 							</div>
 						  </div>
@@ -292,8 +292,8 @@
                 <h4 class="mb-4"><i class="ni ni-chat-round text-yellow"></i>&nbsp&nbspUpdate New Response :</h4>
                 <div class="pl-lg-4">
                   <div class="form-group">
-                    <textarea rows="4" class="form-control form-control-alternative" placeholder="Write your desired response your customer want to hear . . ."></textarea>
-                  </div>
+                      <textarea id="response" name="response" rows="4" class="form-control form-control-alternative" placeholder="Write your desired response your customer want to hear . . ."></textarea>
+                    </div>
                 </div>
               </form>
             </div>

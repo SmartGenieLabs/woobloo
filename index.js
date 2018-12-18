@@ -25,6 +25,7 @@ app.get("/", (req, res) => {
 app.get("/cabs_view", (req, res) => {
     res.render("pages/cabs_view");
 });
+
 app.get("/drivers_view", (req, res) => {
     res.render("pages/drivers_view");
 });
@@ -43,31 +44,26 @@ app.get("/movies_view", (req, res) => {
 });
 
 
-app.get("/cabs_edit", (req, res) => {
-    res.render("pages/cabs_edit");
-});
-app.get("/drivers_edit", (req, res) => {
-    res.render("pages/drivers_edit");
-});
-app.get("/flights_edit", (req, res) => {
-    res.render("pages/flights_edit");
-});
-app.get("/food_delivery_edit", (req, res) => {
-    res.render("pages/food_delivery_edit");
-});
-app.get("/handyman_edit", (req, res) => {
-    res.render("pages/handyman_edit");
-});
-app.get("/movies_edit", (req, res) => {
-    res.render("pages/movies_edit");
-});
+app.get("/cabs_edit", Controller.getCabsResponse);
+app.get("/drivers_edit", Controller.getDriversResponse);
+app.get("/flights_edit", Controller.getFlightsResponse);
+app.get("/food_delivery_edit", Controller.getFoodsResponse);
+app.get("/handyman_edit", Controller.getHandymansResponse);
+app.get("/movies_edit", Controller.getMoviesResponse);
+
+app.post("/cabs_edit", Controller.saveCabsResponse);
+app.post("/drivers_edit", Controller.saveDriversResponse);
+app.post("/flights_edit", Controller.saveFlightsResponse);
+app.post("/food_delivery_edit", Controller.saveFoodsResponse);
+app.post("/handyman_edit", Controller.saveHandymanResponse);
+app.post("/movies_edit", Controller.saveMoviesResponse);
 
 
 
 
 
 app.post("/api", Controller.getResponse);
-app.post("/add", Controller.saveResponse);
+// app.post("/add", Controller.saveResponse);
 
 var port = process.env.PORT || 8000
 app.listen((port), () => {
