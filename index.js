@@ -12,8 +12,15 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+// Setting View Engine as EJS
+app.set("view engine", "ejs");
+app.use(express.static("./views/assets"));
+
 app.use(bodyParser.json());
 
+app.get("/", (req, res) => {
+    res.render("index");
+});
 app.post("/api", Controller.getResponse);
 app.post("/add", Controller.saveResponse);
 
