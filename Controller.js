@@ -1,12 +1,12 @@
 const Controller = {};
 const Response = require('./models/responseSchema');
 const Movie = require('./models/movieSchema');
+const Handyman = require('./models/handymanSchema');
 
 
 //Edit View Update response
 Controller.getResponse = (req, res) => {
     if(req.body.result.metadata.intentName == "Movie"){
-        console.log(req.body.result.parameters);
         myData = new Movie({
             movieName: req.body.result.parameters.movie_Name,
             noOfTickets: req.body.result.parameters.movie_noOfTickets,
@@ -99,20 +99,41 @@ Controller.getResponse = (req, res) => {
             }
         });    }
     if(req.body.result.metadata.intentName == "Handyman"){
-        Response.findOne({service:req.body.result.metadata.intentName},(err, data) => {
+        if(req.body.result.parameters.handyman_Location["subadmin-area"] == ""){
+            var location = "Not Available"
+        }
+        else{
+            var location = req.body.result.parameters.handyman_Location["subadmin-area"];
+        }
+        myData = new Handyman({
+            type: req.body.result.parameters.handyman_Name,
+            date: req.body.result.parameters.handyman_Date,
+            time: req.body.result.parameters.handyman_Time,
+            location: location
+        });
+        console.log(myData);
+        myData.save((err, data) => {
             if(err){
-                return res.json({
-                    speech: "Oh oo, Something went wrong",
-                    displayText: "Oh oo, Something went wrong",
-                    source: 'api'});
+                res.send(err);
             }
             else{
-                return res.json({
-                    speech: data.response,
-                    displayText: data.response,
-                    source: 'api'});
-            }
-        });    }
+                Response.findOne({service:req.body.result.metadata.intentName},(err, data) => {
+                    if(err){
+                        return res.json({
+                            speech: "Oh oo, Something went wrong",
+                            displayText: "Oh oo, Something went wrong",
+                            source: 'api'});
+                    }
+                    else{
+                        return res.json({
+                            speech: data.response,
+                            displayText: data.response,
+                            source: 'api'});
+                    }
+                });
+            } 
+        });    
+    }
 }
 Controller.saveCabsResponse = (req, res) => {
     console.log(req.body);
@@ -334,6 +355,34 @@ Controller.viewMovies = (req, res) => {
         else {
             console.log(data);
             res.render("pages/movies_view", {result:data});
+        }
+    })
+}
+
+Controller.viewCabs = (req, res) => {
+    Cab.find({}, (err, data) => {
+        if(err){
+            res.status(400).json(err);
+        }
+        else {
+            console.log(data);
+            res.render("pages/cabs_view", {result:data});
+        }
+    })
+}
+
+Controller.viewDrivers = (req, res) => {
+    res.render("pages/drivers_view");
+}
+
+Controller.viewHandyman = (req, res) => {
+    Handyman.find({}, (err, data) => {
+        if(err){
+            res.status(400).json(err);
+        }
+        else {
+            console.log(data);
+            res.render("pages/handyman_view", {result:data});
         }
     })
 }

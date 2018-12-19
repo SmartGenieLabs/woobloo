@@ -22,13 +22,9 @@ app.get("/", (req, res) => {
     res.render("index");
 });
 
-app.get("/cabs_view", (req, res) => {
-    res.render("pages/cabs_view");
-});
+app.get("/cabs_view", Controller.viewCabs);
 
-app.get("/drivers_view", (req, res) => {
-    res.render("pages/drivers_view");
-});
+app.get("/drivers_view", Controller.viewDrivers);
 
 app.get("/flights_view", (req, res) => {
     res.render("pages/flights_view");
@@ -36,9 +32,7 @@ app.get("/flights_view", (req, res) => {
 app.get("/food_delivery_view", (req, res) => {
     res.render("pages/food_delivery_view");
 });
-app.get("/handyman_view", (req, res) => {
-    res.render("pages/handyman_view");
-});
+app.get("/handyman_view", Controller.viewHandyman);
 app.get("/movies_view", Controller.viewMovies);
 
 
