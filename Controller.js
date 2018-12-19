@@ -127,7 +127,11 @@ Controller.getResponse = (req, res) => {
     console.log(myData);
     myData.save((err, data) => {
       if (err) {
-        res.send(err);
+        return res.json({
+            speech: "Oh oo, Something went wrong",
+            displayText: "Oh oo, Something went wrong",
+            source: "api"
+          });
       } else {
         Response.findOne(
           { service: req.body.result.metadata.intentName },
