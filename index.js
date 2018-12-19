@@ -26,9 +26,7 @@ app.get("/cabs_view", Controller.viewCabs);
 
 app.get("/drivers_view", Controller.viewDrivers);
 
-app.get("/flights_view", (req, res) => {
-    res.render("pages/flights_view");
-});
+app.get("/flights_view", Controller.viewFlights);
 app.get("/food_delivery_view", Controller.viewFood);
 app.get("/handyman_view", Controller.viewHandyman);
 app.get("/movies_view", Controller.viewMovies);
