@@ -2,6 +2,7 @@ const Controller = {};
 const Response = require('./models/responseSchema');
 const Movie = require('./models/movieSchema');
 const Handyman = require('./models/handymanSchema');
+const Food = require('./models/foodSchema');
 
 
 //Edit View Update response
@@ -84,32 +85,48 @@ Controller.getResponse = (req, res) => {
             }
         });    }
     if(req.body.result.metadata.intentName == "Food"){
-        Response.findOne({service:req.body.result.metadata.intentName},(err, data) => {
-            if(err){
-                return res.json({
-                    speech: "Oh oo, Something went wrong",
-                    displayText: "Oh oo, Something went wrong",
-                    source: 'api'});
-            }
-            else{
-                return res.json({
-                    speech: data.response,
-                    displayText: data.response,
-                    source: 'api'});
-            }
-        });    }
-    if(req.body.result.metadata.intentName == "Handyman"){
-        if(req.body.result.parameters.handyman_Location["subadmin-area"] == ""){
-            var location = "Not Available"
+        if(req.body.result.parameters.food_Restaurant == ""){
+            var rest = "Not Available"
         }
         else{
-            var location = req.body.result.parameters.handyman_Location["subadmin-area"];
+            var rest = req.body.result.parameters.food_Restaurant;
         }
+        myData = new Food({
+            orderName: req.body.result.parameters.food_OrderName,
+            quantity: req.body.result.parameters.food_Number,
+            time: req.body.result.parameters.food_Time,
+            location: req.body.result.parameters.food_Location["street-address"],
+            restName: rest
+        });
+        console.log(myData);
+        myData.save((err, data) => {
+            if(err){
+                res.send(err);
+            }
+            else{
+                Response.findOne({service:req.body.result.metadata.intentName},(err, data) => {
+                    if(err){
+                        return res.json({
+                            speech: "Oh oo, Something went wrong",
+                            displayText: "Oh oo, Something went wrong",
+                            source: 'api'});
+                    }
+                    else{
+                        return res.json({
+                            speech: data.response,
+                            displayText: data.response,
+                            source: 'api'});
+                    }
+                });
+            } 
+        });
+    }
+    if(req.body.result.metadata.intentName == "Handyman"){
         myData = new Handyman({
             type: req.body.result.parameters.handyman_Name,
             date: req.body.result.parameters.handyman_Date,
             time: req.body.result.parameters.handyman_Time,
-            location: location
+            location: req.body.result.parameters.handyman_Location["subadmin-area"]
         });
         console.log(myData);
         myData.save((err, data) => {
@@ -383,6 +400,18 @@ Controller.viewHandyman = (req, res) => {
         else {
             console.log(data);
             res.render("pages/handyman_view", {result:data});
+        }
+    })
+}
+
+Controller.viewFood = (req, res) => {
+    Food.find({}, (err, data) => {
+        if(err){
+            res.status(400).json(err);
+        }
+        else {
+            console.log(data);
+            res.render("pages/food_delivery_view", {result:data});
         }
     })
 }
