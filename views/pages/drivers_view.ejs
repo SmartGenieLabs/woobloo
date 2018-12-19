@@ -470,7 +470,55 @@
                       </div>
                     </td>
                   </tr>
-				 
+                  <% for(var i = 0; i < result.length; i++) { %>
+                    <tr>
+                        <th scope="row">
+                          <div class="media align-items-center">
+                            <a href="#" class="avatar rounded-circle mr-3">
+                              <img alt="Image placeholder" src="/img/people/shash.png">
+                            </a>
+                            <div class="media-body">
+                              <span class="mb-0 text-sm"><%= result[i].username %></span>
+                            </div>
+                          </div>
+                        </th>
+                        <td>
+                            <%= result[i].pickup %>
+                        </td>                   
+                        <td>
+                            <%= result[i].drop %>
+                        </td>
+              <td>
+                  <%= result[i].time %>
+                        </td>
+                        <td>
+                            <%= result[i].date %>
+                        </td>
+              <td>
+                  <%= result[i].need %>
+                        </td>
+              <td>
+                  <%= result[i].type %>                        </td>
+              <td>
+                          <span class="badge badge-dot mr-4">
+                           <i class="bg-warning"></i> <%= result[i].status %>
+                          </span>
+                        </td>
+              <td class="text-right">
+                          <div class="dropdown">
+                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i class="fas fa-ellipsis-v"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                              <a class="dropdown-item" href="#">pending</a>
+                              <a class="dropdown-item" href="#">completed</a>
+                              <a class="dropdown-item" href="#">delayed</a>
+                  <a class="dropdown-item" href="#">on schedule</a>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <% } %>
                 </tbody>
               </table>
             </div>
