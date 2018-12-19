@@ -4,6 +4,7 @@ const Movie = require("./models/movieSchema");
 const Handyman = require("./models/handymanSchema");
 const Food = require("./models/foodSchema");
 const Flight = require("./models/flightSchema");
+const Driver = require("./models/driverSchema");
 
 //Edit View Update response
 Controller.getResponse = (req, res) => {
@@ -17,7 +18,11 @@ Controller.getResponse = (req, res) => {
     console.log(myData);
     myData.save((err, data) => {
       if (err) {
-        res.send(err);
+        return res.json({
+            speech: "Oh oo, Something went wrong",
+            displayText: "Oh oo, Something went wrong",
+            source: "api"
+          });
       } else {
         Response.findOne(
           { service: req.body.result.metadata.intentName },
@@ -61,24 +66,47 @@ Controller.getResponse = (req, res) => {
     );
   }
   if (req.body.result.metadata.intentName == "Driver") {
-    Response.findOne(
-      { service: req.body.result.metadata.intentName },
-      (err, data) => {
+      if(req.body.result.parameters.driver_Date == ""){
+          var date = "Not Available"
+      }
+      else{
+          var date = req.body.result.parameters.driver_Date;
+      }
+    myData = new Movie({
+        pickup: req.body.result.parameters.driver_Pickup,
+        drop: req.body.result.parameters.driver_Drop["street-address"],
+        time: req.body.result.parameters.driver_Time,
+        date: req.body.result.parameters.movie_Location
+      });
+      console.log(myData);
+      myData.save((err, data) => {
         if (err) {
           return res.json({
-            speech: "Oh oo, Something went wrong",
-            displayText: "Oh oo, Something went wrong",
-            source: "api"
-          });
+              speech: "Oh oo, Something went wrong",
+              displayText: "Oh oo, Something went wrong",
+              source: "api"
+            });
         } else {
-          return res.json({
-            speech: data.response,
-            displayText: data.response,
-            source: "api"
-          });
+          Response.findOne(
+            { service: req.body.result.metadata.intentName },
+            (err, data) => {
+              if (err) {
+                return res.json({
+                  speech: "Oh oo, Something went wrong",
+                  displayText: "Oh oo, Something went wrong",
+                  source: "api"
+                });
+              } else {
+                return res.json({
+                  speech: data.response,
+                  displayText: data.response,
+                  source: "api"
+                });
+              }
+            }
+          );
         }
-      }
-    );
+      });
   }
   if (req.body.result.metadata.intentName == "Flight") {
     myData = new Flight({
@@ -88,7 +116,11 @@ Controller.getResponse = (req, res) => {
     console.log(myData);
     myData.save((err, data) => {
       if (err) {
-        res.send(err);
+        return res.json({
+            speech: "Oh oo, Something went wrong",
+            displayText: "Oh oo, Something went wrong",
+            source: "api"
+          });
       } else {
         Response.findOne(
           { service: req.body.result.metadata.intentName },
@@ -112,6 +144,10 @@ Controller.getResponse = (req, res) => {
     });
   }
   if (req.body.result.metadata.intentName == "Food") {
+      var location= [];
+      for( var value in req.body.result.parameters.food_Location){
+          location.push(req.body.result.parameters.food_Location[value]);
+      }
     if (req.body.result.parameters.food_Restaurant == "") {
       var rest = "Not Available";
     } else {
@@ -121,7 +157,7 @@ Controller.getResponse = (req, res) => {
       orderName: req.body.result.parameters.food_OrderName,
       quantity: req.body.result.parameters.food_Number,
       time: req.body.result.parameters.food_Time,
-      location: req.body.result.parameters.food_Location["street-address"],
+      location: location.toString(),
       restName: rest
     });
     console.log(myData);
