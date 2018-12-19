@@ -5,15 +5,20 @@ const Handyman = require("./models/handymanSchema");
 const Food = require("./models/foodSchema");
 const Flight = require("./models/flightSchema");
 const Driver = require("./models/driverSchema");
+const Cab = require("./models/cabSchema");
 
 //Edit View Update response
 Controller.getResponse = (req, res) => {
   if (req.body.result.metadata.intentName == "Movie") {
+    var location = [];
+    for (var value in req.body.result.parameters.movie_Location) {
+      location.push(req.body.result.parameters.movie_Location[value]);
+    }
     myData = new Movie({
       movieName: req.body.result.parameters.movie_Name,
       noOfTickets: req.body.result.parameters.movie_noOfTickets,
       time: req.body.result.parameters.movie_Time,
-      location: req.body.result.parameters.movie_Location["street-address"]
+      location: location.toString()
     });
     console.log(myData);
     myData.save((err, data) => {
@@ -46,24 +51,69 @@ Controller.getResponse = (req, res) => {
     });
   }
   if (req.body.result.metadata.intentName == "Cab") {
-    Response.findOne(
-      { service: req.body.result.metadata.intentName },
-      (err, data) => {
-        if (err) {
-          return res.json({
-            speech: "Oh oo, Something went wrong",
-            displayText: "Oh oo, Something went wrong",
-            source: "api"
-          });
-        } else {
-          return res.json({
-            speech: data.response,
-            displayText: data.response,
-            source: "api"
-          });
-        }
+    var drlocation = [];
+    for (var value in req.body.result.parameters.cab_Drop[0]) {
+      drlocation.push(req.body.result.parameters.cab_Drop[0][value]);
+    }
+    console.log(drlocation.toString());
+    var prlocation = [];
+    for (var value in req.body.result.parameters.cab_Pickup[0]) {
+      prlocation.push(req.body.result.parameters.cab_Pickup[0][value]);
+    }
+    if (req.body.result.parameters.cab_Date == "") {
+      var date = "Not Available";
+    } else {
+      var date = req.body.result.parameters.cab_Date;
+    }
+    if (req.body.result.parameters.cab_Class == "") {
+      var type = "Not Available";
+    } else {
+      var type = req.body.result.parameters.cab_Class;
+    }
+    if (req.body.result.parameters.cab_NoOfPassengers == ""){
+        var nop = "Not Available";
+    }
+    else{
+        var nop = req.body.result.parameters.cab_NoOfPassengers;
+    }
+
+    myData = new Cab({
+      pickup: prlocation.toString(),
+      drop: drlocation.toString(),
+      time: req.body.result.parameters.cab_time,
+      date: date,
+      noOfPassengers: nop,
+      class: type
+    });
+    console.log(myData);
+    myData.save((err, data) => {
+      if (err) {
+        return res.json({
+          speech: "Oh oo, Something went wrong",
+          displayText: "Oh oo, Something went wrong",
+          source: "api"
+        });
+      } else {
+        Response.findOne(
+          { service: req.body.result.metadata.intentName },
+          (err, data) => {
+            if (err) {
+              return res.json({
+                speech: "Oh oo, Something went wrong",
+                displayText: "Oh oo, Something went wrong",
+                source: "api"
+              });
+            } else {
+              return res.json({
+                speech: data.response,
+                displayText: data.response,
+                source: "api"
+              });
+            }
+          }
+        );
       }
-    );
+    });
   }
   if (req.body.result.metadata.intentName == "Driver") {
     var dlocation = [];

@@ -23,11 +23,11 @@ const cabSchema = new Schema({
             type: String,
             default: "Not Available"
         },
-        dropLocation:{
+        drop:{
             type: String,
             required: true
         },
-        pickupLocation:{
+        pickup:{
             type: String,
             required: true
         },
